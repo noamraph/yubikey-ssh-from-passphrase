@@ -1,6 +1,6 @@
 # Creating a yubikey that allows SSH authentication with a key generated from a passphrase
 
-This recipe provides a simple Dockerfile that allows you to generate a SSH key
+This recipe provides a simple Dockerfile that allows you to generate an SSH key
 from a passphrase and store the generated key on a Yubikey. This will allow you
 to keep the passphrase on a piece of paper in a safe place, and generate more
 such Yubikeys if you lost the first one.
@@ -123,3 +123,20 @@ ssh localhost echo success
 
 This will ask for the PIN. Enter `123456`.
 
+
+## Generating a passphrase
+
+In the BitCoin world using passphrases is a standard practice. BIP39 seems to be
+the standard way. The reference implementation is https://github.com/trezor/python-mnemonic.
+To use it, on a disconnected machine, first install it:
+
+```
+apt install -y python3-pip
+pip3 install mnemonic
+```
+
+And then, when disconnected, run:
+
+```
+python3 -c 'from mnemonic import Mnemonic; print(Mnemonic("english").generate(strength=128))'
+```
